@@ -75,6 +75,74 @@ install_docker() {
   echo "zinit snippet OMZP::docker" >> ~/.zshrc
 }
 
+install_node_tools() {
+  echo "Installing Node.js and related tools..."
+  # Install nvm (Node Version Manager)
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+  # Add nvm to zshrc if not already present
+  if ! grep -q "nvm initialization" ~/.zshrc; then
+    echo "" >> ~/.zshrc
+    echo "# nvm initialization" >> ~/.zshrc
+    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.zshrc
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.zshrc
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.zshrc
+  fi
+
+  # Source nvm directly
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+  # Install latest LTS version
+  nvm install --lts
+  nvm use --lts
+
+  # Install pnpm globally
+  curl -fsSL https://get.pnpm.io/install.sh | sh -
+
+  # Add pnpm to path directly
+  export PNPM_HOME="$HOME/Library/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+  esac
+
+  # Install global development tools using full path to pnpm
+  $PNPM_HOME/pnpm install -g typescript ts-node
+  $PNPM_HOME/pnpm install -g @antfu/ni # Smart npm/yarn/pnpm command dispatcher
+}
+
+install_dev_tools() {
+  echo "Installing additional development tools..."
+  # Install ripgrep for better search
+  brew install ripgrep
+
+  # Install lazygit for better git UI
+  brew install lazygit
+
+  # Install bat (better cat)
+  brew install bat
+  echo "" >> ~/.zshrc
+  echo "# bat alias" >> ~/.zshrc
+  echo 'alias cat="bat"' >> ~/.zshrc
+
+  # Install exa (modern ls replacement)
+  brew install exa
+  echo "" >> ~/.zshrc
+  echo "# exa aliases" >> ~/.zshrc
+  echo 'alias ls="exa"' >> ~/.zshrc
+  echo 'alias ll="exa -l"' >> ~/.zshrc
+  echo 'alias la="exa -la"' >> ~/.zshrc
+  echo 'alias lt="exa --tree"' >> ~/.zshrc
+
+  # Install tldr for better man pages
+  brew install tldr
+
+  # Install httpie for API testing
+  brew install httpie
+}
+
 setup_git() {
   echo "Setting up Git configuration..."
   # Download and execute gitset.sh
@@ -101,6 +169,8 @@ install_fzf
 install_fira_code_nerd_font
 install_iterm2
 install_docker
+install_node_tools
+install_dev_tools
 setup_git
 setup_editor
 echo "Bootstrap completed!"
