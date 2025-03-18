@@ -86,8 +86,10 @@ setup_git() {
 
 setup_editor() {
   echo "Setting up Cursor editor configuration..."
+  curl -fsSL https://raw.githubusercontent.com/hwisu/REPO/main/editor_setting.sh -o editor_setting.sh
   chmod +x editor_setting.sh
   ./editor_setting.sh
+  rm editor_setting.sh
 }
 
 install_cursor
