@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # 홈 디렉토리의 .gitconfig 파일 생성/수정
 cat > ~/.gitconfig << 'EOL'
@@ -56,8 +55,12 @@ updateRefs = true
 #[merge]
 #conflictstyle = zdiff3
 
-#[pull]
-#rebase = true
+[user]
+name = hwisu
+email = hwitticus@gmail.com
+
+[pull]
+rebase = true
 EOL
 
 echo "Git 설정이 ~/.gitconfig 파일에 저장되었습니다."
