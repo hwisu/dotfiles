@@ -69,10 +69,6 @@ install_iterm2() {
 install_docker() {
   echo "Installing Docker..."
   brew install --cask docker
-
-  echo "" >> ~/.zshrc
-  echo "# Docker completion" >> ~/.zshrc
-  echo "zinit snippet OMZP::docker" >> ~/.zshrc
 }
 
 install_node_tools() {
@@ -127,14 +123,14 @@ install_dev_tools() {
   echo "# bat alias" >> ~/.zshrc
   echo 'alias cat="bat"' >> ~/.zshrc
 
-  # Install exa (modern ls replacement)
-  brew install exa
+  # Install eza (modern ls replacement, successor of exa)
+  brew install eza
   echo "" >> ~/.zshrc
-  echo "# exa aliases" >> ~/.zshrc
-  echo 'alias ls="exa"' >> ~/.zshrc
-  echo 'alias ll="exa -l"' >> ~/.zshrc
-  echo 'alias la="exa -la"' >> ~/.zshrc
-  echo 'alias lt="exa --tree"' >> ~/.zshrc
+  echo "# eza aliases" >> ~/.zshrc
+  echo 'alias ls="eza"' >> ~/.zshrc
+  echo 'alias ll="eza -l"' >> ~/.zshrc
+  echo 'alias la="eza -la"' >> ~/.zshrc
+  echo 'alias lt="eza --tree"' >> ~/.zshrc
 
   # Install tldr for better man pages
   brew install tldr
