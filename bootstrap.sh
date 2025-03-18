@@ -154,8 +154,7 @@ install_zinit() {
     echo "" >> ~/.zshrc
     echo "# Zinit plugins" >> ~/.zshrc
     echo "zinit light zsh-users/zsh-autosuggestions" >> ~/.zshrc
-    echo "zinit light zdharma-continuum/fast-syntax-highlighting" >> ~/.zshrc
-    echo "zinit light zdharma-continuum/history-search-multi-word" >> ~/.zshrc
+    echo "zinit light zsh-users/zsh-history-substring-search" >> ~/.zshrc
     log_success "Zinit configuration added to .zshrc"
   else
     log_success "Zinit already configured in .zshrc"
