@@ -30,23 +30,36 @@ install_1password() {
 install_starship() {
   echo "Installing starship prompt..."
   brew install starship
-
-  echo '\n# Starship prompt initialization\nexport STARSHIP_CONFIG=~/.config/starship.toml\nexport STARSHIP_CACHE=~/.starship/cache\neval "$(starship init zsh)"' >> ~/.zshrc
+  
+  echo "" >> ~/.zshrc
+  echo "# Starship prompt initialization" >> ~/.zshrc
+  echo "export STARSHIP_CONFIG=~/.config/starship.toml" >> ~/.zshrc
+  echo "export STARSHIP_CACHE=~/.starship/cache" >> ~/.zshrc
+  echo 'eval "$(starship init zsh)"' >> ~/.zshrc
 }
 
 install_zinit() {
   echo "Installing zinit..."
   brew install zinit
-  # Add zinit init to zshrc
-  echo '\n# Zinit initialization\nsource $(brew --prefix)/opt/zinit/zinit.zsh\n\n# Zinit plugins\nzinit light zsh-users/zsh-autosuggestions\nzinit light zdharma-continuum/fast-syntax-highlighting\nzinit light zdharma-continuum/history-search-multi-word' >> ~/.zshrc
+  
+  echo "" >> ~/.zshrc
+  echo "# Zinit initialization" >> ~/.zshrc
+  echo "source $(brew --prefix)/opt/zinit/zinit.zsh" >> ~/.zshrc
+  echo "" >> ~/.zshrc
+  echo "# Zinit plugins" >> ~/.zshrc
+  echo "zinit light zsh-users/zsh-autosuggestions" >> ~/.zshrc
+  echo "zinit light zdharma-continuum/fast-syntax-highlighting" >> ~/.zshrc
+  echo "zinit light zdharma-continuum/history-search-multi-word" >> ~/.zshrc
 }
 
 install_fzf() {
   echo "Installing fzf..."
   brew install fzf
-
-    # Add fzf init to zshrc
-  echo '\n# fzf initialization\n[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh' >> ~/.zshrc
+  
+  echo "" >> ~/.zshrc
+  echo "# fzf initialization" >> ~/.zshrc
+  echo '[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh' >> ~/.zshrc
+  
   # Run fzf install script
   $(brew --prefix)/opt/fzf/install --all
 }
@@ -64,8 +77,10 @@ install_iterm2() {
 install_docker() {
   echo "Installing Docker..."
   brew install --cask docker
-
-  echo '\n# Docker completion\nzinit snippet OMZP::docker' >> ~/.zshrc
+  
+  echo "" >> ~/.zshrc
+  echo "# Docker completion" >> ~/.zshrc
+  echo "zinit snippet OMZP::docker" >> ~/.zshrc
 }
 
 install_cursor
