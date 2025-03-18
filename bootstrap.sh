@@ -153,6 +153,8 @@ install_zinit() {
     echo "source \$(brew --prefix)/opt/zinit/zinit.zsh" >> ~/.zshrc
     echo "" >> ~/.zshrc
     echo "# Zinit plugins" >> ~/.zshrc
+    echo "zinit light zsh-users/zsh-syntax-highlighting" >> ~/.zshrc
+    echo "zinit light zsh-users/zsh-completions" >> ~/.zshrc
     echo "zinit light zsh-users/zsh-autosuggestions" >> ~/.zshrc
     echo "zinit light zsh-users/zsh-history-substring-search" >> ~/.zshrc
     log_success "Zinit configuration added to .zshrc"
