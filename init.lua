@@ -2,6 +2,34 @@
 -- 변수 설정
 local in_vscode = vim.g.vscode ~= nil
 
+-- 보안 취약점 확인 (GHSA-6f9m-hj8h-xjgj)
+local function check_security_vulnerability()
+  -- Neovim 버전 확인
+  local version = vim.version()
+  local version_str = string.format("%d.%d.%d", version.major, version.minor, version.patch)
+
+  -- 0.8.3 미만의 버전에서는 보안 경고 표시
+  if version.major == 0 and (version.minor < 8 or (version.minor == 8 and version.patch < 3)) then
+    vim.notify(
+      "보안 경고: 현재 Neovim 버전(" .. version_str .. ")에는 Treesitter 코드 삽입 취약점이 있습니다.\n" ..
+      "가능한 빨리 Neovim 0.8.3 이상으로 업그레이드하세요.",
+      vim.log.levels.WARN
+    )
+
+    -- 안전 조치: 위험한 treesitter 기능 비활성화
+    vim.g.loaded_treesitter = 1
+    vim.g.loaded_treesitter_query = 1
+    vim.g.treesitter_injections_disabled = 1
+
+    return false
+  end
+
+  return true
+end
+
+-- 보안 취약점 검사 실행
+local is_neovim_secure = check_security_vulnerability()
+
 -- 기본 옵션 설정
 vim.opt.syntax = "on"
 vim.cmd('filetype plugin indent on')
@@ -149,13 +177,32 @@ require("lazy").setup({
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua", "vim", "javascript", "typescript", "python", "bash" },
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
+      -- 보안 취약점이 있는 버전에서는 안전한 설정으로 구성
+      if not is_neovim_secure then
+        -- 취약점을 방지하기 위한 최소한의 설정만 사용
+        require("nvim-treesitter.configs").setup({
+          ensure_installed = { "lua", "vim", "javascript", "typescript", "python", "bash" },
+          highlight = { enable = true },
+          indent = { enable = true },
+          -- 코드 삽입 관련 기능 비활성화
+          incremental_selection = { enable = false },
+          textobjects = { enable = false },
+          -- 주입(injection) 기능 명시적 비활성화
+          injections = { enable = false },
+        })
+      else
+        -- 안전한 버전에서 완전한 기능 활성화
+        require("nvim-treesitter.configs").setup({
+          ensure_installed = { "lua", "vim", "javascript", "typescript", "python", "bash" },
+          highlight = { enable = true },
+          indent = { enable = true },
+          -- 안전하게 추가 기능 사용
+          incremental_selection = { enable = true },
+          textobjects = { enable = true },
+        })
+      end
     end,
-    cond = not in_vscode,
+    cond = not in_vscode and is_neovim_secure,  -- 보안 취약점이 있는 버전에서는 불러오지 않음
   },
 
   -- Git 통합
