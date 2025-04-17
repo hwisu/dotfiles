@@ -140,7 +140,7 @@ function setup_editor() {
     local script_path="$(dirname "$0")/editor_setting.sh"
     if [ -f "$script_path" ]; then
       log_info "Using local editor_setting.sh..."
-      chmod +x "$script_path"
+      /bin/chmod +x "$script_path"
       "$script_path"
       log_success "Cursor editor configured successfully"
     else

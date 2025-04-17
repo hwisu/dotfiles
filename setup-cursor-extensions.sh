@@ -135,7 +135,8 @@ install_extensions() {
     fi
 
     log_info "설치 중: $ext (${TRUSTED_EXTENSIONS[$ext]})"
-    cursor --install-extension "$ext" &> /dev/null
+    # 초기 설치 시도 시 출력을 숨기지 않음 (오류 확인을 위해)
+    cursor --install-extension "$ext"
 
     if [[ $? -ne 0 ]]; then
       log_warning "설치 실패: $ext"

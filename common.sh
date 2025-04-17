@@ -41,7 +41,7 @@ function save_state() {
 
   # Save state to file
   typeset -p STATE > ${STATE_FILE}
-  chmod 600 ${STATE_FILE}
+  /bin/chmod 600 ${STATE_FILE}
 }
 
 # Check if a state has been completed
@@ -196,15 +196,15 @@ function set_secure_permissions() {
   case $type in
     file)
       # 파일: 소유자만 읽기/쓰기 가능 (600)
-      chmod 600 "$path"
+      /bin/chmod 600 "$path"
       ;;
     directory)
       # 디렉토리: 소유자만 읽기/쓰기/실행 가능 (700)
-      chmod 700 "$path"
+      /bin/chmod 700 "$path"
       ;;
     executable)
       # 실행 파일: 소유자만 읽기/쓰기/실행 가능 (700)
-      chmod 700 "$path"
+      /bin/chmod 700 "$path"
       ;;
     *)
       log_error "알 수 없는 타입입니다: $type"
@@ -213,8 +213,8 @@ function set_secure_permissions() {
   esac
 
   # 소유자 확인
-  if [[ $(stat -f %u "$path") != $(id -u) ]]; then
-    safe_sudo "chown $(id -u):$(id -g) '$path'"
+  if [[ $(/usr/bin/stat -f %u "$path") != $(/usr/bin/id -u) ]]; then
+    safe_sudo "/usr/sbin/chown $(/usr/bin/id -u):$(/usr/bin/id -g) '$path'"
   fi
 
   log_success "보안 권한 설정 완료: $path"

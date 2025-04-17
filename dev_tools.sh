@@ -13,7 +13,7 @@ function setup_git() {
     local script_path="$(dirname "$0")/gitset.sh"
     if [ -f "$script_path" ]; then
       log_info "Using local gitset.sh..."
-      chmod +x "$script_path"
+      /bin/chmod +x "$script_path"
       "$script_path"
       log_success "Git configured successfully"
     else
@@ -131,7 +131,7 @@ function install_node_tools() {
     # Install pnpm if not already installed
     if ! command -v pnpm >/dev/null 2>&1; then
       log_info "Installing pnpm..."
-      curl -fsSL https://get.pnpm.io/install.sh | sh -
+      curl -fsSL https://get.pnpm.io/install.sh | /bin/sh -
       log_success "pnpm installed successfully"
     else
       log_success "pnpm already installed"
