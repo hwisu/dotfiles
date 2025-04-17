@@ -11,18 +11,10 @@
 - **쉘 도구**: Zsh 플러그인, 테마, 유틸리티 설치
 - **Docker**: 개발 컨테이너 환경 구축
 
-## ⚠️ 보안 기능
-
-- Neovim 설치 시 [CVE GHSA-6f9m-hj8h-xjgj](https://github.com/neovim/neovim/security/advisories/GHSA-6f9m-hj8h-xjgj) 취약점 검사 및 방어
-- 관리자 권한 사용 전 사용자 확인 (safe_sudo)
-- 파일 권한 강화 및 무결성 검증
-- 버전 체크 기능으로 최소 요구 버전 확인
-
 ## 🚀 시작하기
 
 ### 요구 사항
 
-- macOS 11.0 이상
 - 관리자 권한
 - 인터넷 연결
 
@@ -35,18 +27,6 @@ cd bootstrap.mac
 
 # 메인 스크립트 실행
 ./bootstrap.sh
-```
-
-## 📦 개별 설치
-
-전체 설정 대신 특정 도구만 설치하려면 다음 스크립트를 개별적으로 실행할 수 있습니다:
-
-```bash
-# Neovim 설정만 설치
-./setup-nvim.sh
-
-# Cursor 확장 프로그램만 설치
-./setup-cursor-extensions.sh
 ```
 
 ## 📋 설치되는 Cursor 확장 프로그램
@@ -76,19 +56,3 @@ cd bootstrap.mac
 1. 스크립트에서 발생하는 오류 메시지 확인
 2. `~/.bootstrap_state` 파일 확인 (설치 상태 추적)
 3. 필요한 경우 `rm ~/.bootstrap_state` 명령으로 상태 초기화 후 재시도
-
-### 알려진 문제
-
-- Python 확장 설치 실패 시 Cursor를 직접 실행하여 확장 프로그램 설치
-
-## 📄 라이선스
-
-MIT License - 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
-
-## 🤝 기여하기
-
-이슈 및 풀 리퀘스트는 환영합니다! 기여하기 전에 코드 스타일 가이드를 확인해주세요.
-
-## 🙏 감사의 말
-
-- 이 프로젝트는 다양한 오픈 소스 도구와 커뮤니티의 도움으로 만들어졌습니다.
