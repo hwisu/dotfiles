@@ -42,7 +42,7 @@ fi
 # Git 설정 내용
 log_info "Git 설정 파일 생성 중..."
 
-GIT_CONFIG_CONTENT=$(cat <<'EOL'
+cat > "$GIT_CONFIG" << 'EOL'
 [column]
 ui = auto
 
@@ -103,53 +103,77 @@ email = hwitticus@gmail.com
 
 [pull]
 rebase = true
+
+[alias]
+    # 기본 명령어 단축
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    # 브랜치 관련
+    b = branch
+    ba = branch -a
+    bd = branch -d
+    bD = branch -D
+    # 원격 저장소 관련
+    r = remote
+    rv = remote -v
+    # 스태시 관련
+    ss = stash save
+    sl = stash list
+    sp = stash pop
+    sa = stash apply
+    # 리베이스 관련
+    rc = rebase --continue
+    ra = rebase --abort
+    rs = rebase --skip
+    # 병합 관련
+    mt = mergetool
+    # 태그 관련
+    t = tag
+    ta = tag -a
+    td = tag -d
+    # 기타 유용한 명령어
+    undo = reset --soft HEAD^
+    amend = commit --amend --no-edit
+    uncommit = reset --soft HEAD^
+    unstage = reset HEAD --
+    discard = checkout --
+    cleanup = "!git branch --merged | grep -v '\\*\\|master\\|main\\|develop' | xargs -n 1 git branch -d"
 EOL
-)
 
-# 설정 파일 작성
-echo $GIT_CONFIG_CONTENT > "$GIT_CONFIG"
+# 설정 파일 권한 설정
+chmod 644 "$GIT_CONFIG"
 
-if [[ $? -eq 0 ]]; then
-  log_success "Git 설정이 ${GIT_CONFIG} 파일에 성공적으로 저장되었습니다."
+# 설정 확인
+log_info "Git 설정 확인 중..."
+if [[ -f $GIT_CONFIG ]]; then
+  # 설정 파일이 존재하는지 확인
+  log_success "Git 설정 파일이 생성되었습니다."
 
-  # .gitignore 파일 생성 (기존에는 없었지만 설정에서 언급되어 있음)
-  if [[ ! -f "${HOME}/.gitignore" ]]; then
-    log_info ".gitignore 파일 생성 중..."
-
-    cat > "${HOME}/.gitignore" <<EOL
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
-
-# Node.js
-node_modules/
-npm-debug.log
-yarn-error.log
-.pnpm-debug.log
-
-# Editor files
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# Logs
-logs
-*.log
-
-# Env files
-.env
-.env.local
-EOL
-
-    log_success ".gitignore 파일이 생성되었습니다."
+  # 설정 내용 확인
+  if git config --get user.name >/dev/null && git config --get user.email >/dev/null; then
+    log_success "사용자 정보가 설정되었습니다."
+    log_info "사용자 이름: $(git config --get user.name)"
+    log_info "이메일: $(git config --get user.email)"
   else
-    log_info "기존 .gitignore 파일을 유지합니다."
+    log_error "사용자 정보가 설정되지 않았습니다."
+    exit 1
+  fi
+
+  # alias 설정 확인
+  if git config --get-regexp '^alias\.' >/dev/null; then
+    log_success "Git alias가 설정되었습니다."
+    log_info "설정된 alias 목록:"
+    git config --get-regexp '^alias\.' | sed 's/^alias\.//'
+  else
+    log_error "Git alias가 설정되지 않았습니다."
+    exit 1
   fi
 else
-  log_error "Git 설정 파일 생성 중 오류가 발생했습니다."
+  log_error "Git 설정 파일이 생성되지 않았습니다."
   exit 1
 fi
