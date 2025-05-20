@@ -1,0 +1,87 @@
+{
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "FiraCodeiScript",
+  "editor.fontSize": 15,
+  "editor.fontLigatures": true,
+  "editor.rulers": [
+      80,
+      100
+  ],
+  "editor.renderWhitespace": "all",
+  "editor.tabSize": 2,
+  "editor.lineNumbers": "relative",
+  "editor.renderLineHighlight": "all",
+  "editor.cursorSurroundingLines": 8,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "terminal.integrated.fontFamily": "Monoplex KR Nerd",
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.fontLigatures": true,
+  "debug.console.fontSize": 16,
+  "cursor-retrieval.canAttemptGithubLogin": false,
+  "cursor.cpp.enablePartialAccepts": true,
+  "explorer.fileNesting.patterns": {
+      "*.ts": "${capture}.js",
+      "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+      "*.jsx": "${capture}.js",
+      "*.tsx": "${capture}.ts",
+      "tsconfig.json": "tsconfig.*.json",
+      "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+      "*.sqlite": "${capture}.${extname}-*",
+      "*.db": "${capture}.${extname}-*",
+      "*.sqlite3": "${capture}.${extname}-*",
+      "*.db3": "${capture}.${extname}-*",
+      "*.sdb": "${capture}.${extname}-*",
+      "*.s3db": "${capture}.${extname}-*"
+  },
+  "sqliteViewer.maxFileSize": 1000,
+  "workbench.colorTheme": "Kanagawa",
+  "haskell.manageHLS": "GHCup",
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "always"
+  },
+  "extensions.experimental.affinity": {
+      "asvetliakov.vscode-neovim": 1
+  },
+  "editor.tokenColorCustomizations": {
+      "textMateRules": [
+          {
+              "scope": [
+                  "keyword", // import, export, return…
+                  "constant", // String, Number, Boolean…, this, super
+                  "storage.modifier", // static keyword
+                  "storage.type.class.js", // class keyword
+                  "storage.type.function", // function keyword
+                  "keyword.control" // control keywords
+              ],
+              "settings": {
+                  "fontStyle": "italic"
+              }
+          },
+          {
+              "scope": [
+                  "invalid",
+                  "keyword.control.conditional",
+                  "keyword.operator",
+                  "constant.numeric.css",
+                  "keyword.other.unit.px.css",
+                  "constant.numeric.decimal.js",
+                  "constant.numeric.json",
+                  "string.regexp", // 정규식 전체
+                  "string.regexp constant.character.escape", // 정규식 내 이스케이프 문자
+                  "constant.character.escape", // 일반 문자열 내 이스케이프 문자
+                  "entity.name.type.class", // class names
+                  "entity.name.function" // function names
+              ],
+              "settings": {
+                  "fontStyle": ""
+              }
+          }
+      ]
+  },
+  "svelte.enable-ts-plugin": true,
+  "cursor.composer.shouldAllowCustomModes": true,
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "cursor.terminal.usePreviewBox": true,
+  "markdown.preview.fontFamily": "Monoplex KR Nerd"
+}
