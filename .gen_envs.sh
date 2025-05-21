@@ -15,11 +15,12 @@ else
     exit 1
 fi
 
-jq -r '
+# 변수 설정만 하고 출력하지 않음
+eval "$(jq -r '
     if .variables then
-        .variables | to_entries[] | "export \(.key)=\"\(.value | @sh)\""
+        .variables | to_entries[] | "export \(.key)=\"\(.value)\""
     else empty end,
     if .paths_to_add then
-        .paths_to_add[] | "export PATH=\"\(. | @sh):$PATH\""
+        .paths_to_add[] | "export PATH=\"\(.):$PATH\""
     else empty end
-' "$ENV_FILE"
+' "$ENV_FILE")"
