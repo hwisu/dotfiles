@@ -107,6 +107,7 @@ if (import.meta.main) {
     "tmux",
     "wget",
     "pnpm",
+    "nvim",
   ]);
   await brewInstallCask([
     "font-neodunggeunmo-code",
